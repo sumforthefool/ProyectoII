@@ -8,7 +8,7 @@ public class ConexionBD {
 
     private static final String URL = "jdbc:oracle:thin:@localhost:1521:XE";
     private static final String USUARIO = "SYSTEM";
-    private static final String CONTRASENA = "nthn";
+    private static final String CONTRASENA = "nthn2001";
 
     public static Connection obtenerConexion() throws SQLException {
         return DriverManager.getConnection(URL, USUARIO, CONTRASENA);
