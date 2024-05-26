@@ -13,14 +13,19 @@ public class PersonaDAO {
     private static final String DELETE_PERSONA = "DELETE FROM Persona WHERE id = ?";
 
     public void insertarPersona(Persona persona) throws SQLException {
-        try (Connection conn = ConexionBD.obtenerConexion();
-             PreparedStatement stmt = conn.prepareStatement(INSERT_PERSONA)) {
 
-            stmt.setString(1, persona.getNombre());
-            stmt.setString(2, persona.getApellido());
-            stmt.setInt(3, persona.getEdad());
+        if (existePersona(persona)) {
+            throw new SQLException("Error: Ya existe una persona con los mismos datos.");
+        } else {
+            try (Connection conn = ConexionBD.obtenerConexion();
+                 PreparedStatement stmt = conn.prepareStatement(INSERT_PERSONA)) {
 
-            stmt.executeUpdate();
+                stmt.setString(1, persona.getNombre());
+                stmt.setString(2, persona.getApellido());
+                stmt.setInt(3, persona.getEdad());
+
+                stmt.executeUpdate();
+            }
         }
     }
 
@@ -119,5 +124,20 @@ public class PersonaDAO {
         crearTablaSiNoExiste();
     }
 
+    public boolean existePersona(Persona persona) throws SQLException {
+        String sql = "SELECT 1 FROM Persona WHERE nombre = ? AND apellido = ? AND edad = ?"; // Puedes ajustar los campos de comparación según tus necesidades
+
+        try (Connection conn = ConexionBD.obtenerConexion();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, persona.getNombre());
+            stmt.setString(2, persona.getApellido());
+            stmt.setInt(3, persona.getEdad());
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next(); // Devuelve true si se encuentra al menos un registro
+            }
+        }
+    }
 }
 
