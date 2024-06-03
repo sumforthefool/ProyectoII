@@ -106,24 +106,6 @@ public class PersonaDAO {
         }
     }
 
-    private void crearTablaSiNoExiste() throws SQLException {
-        String sql = "CREATE TABLE IF NOT EXISTS Persona (" +
-                "  id INT AUTO_INCREMENT PRIMARY KEY," +
-                "  nombre VARCHAR2(255) NOT NULL," +
-                "  apellido VARCHAR2(255) NOT NULL," +
-                "  edad INT" +
-                ")";
-
-        try (Connection conn = ConexionBD.obtenerConexion();
-             Statement stmt = conn.createStatement()) {
-            stmt.execute(sql);
-        }
-    }
-
-    public PersonaDAO() throws SQLException {
-        crearTablaSiNoExiste();
-    }
-
     public boolean existePersona(Persona persona) throws SQLException {
         String sql = "SELECT 1 FROM Persona WHERE nombre = ? AND apellido = ? AND edad = ?"; // Puedes ajustar los campos de comparación según tus necesidades
 
