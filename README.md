@@ -1,71 +1,84 @@
-# Proyecto ORM/ODM Multiplataforma - Primer Avance
+---
 
-¡Bienvenido al primer avance de nuestro Proyecto ORM/ODM Multiplataforma en Java! Este proyecto se centra en la implementación inicial de un framework ORM con soporte para bases de datos Oracle.
+# Proyecto ORM/ODM Multiplataforma - Segundo Avance
+
+¡Bienvenido al segundo avance de nuestro Proyecto ORM/ODM Multiplataforma en Java! En este avance, hemos implementado la funcionalidad de Object-Document Mapping (ODM) para trabajar con MongoDB.
 
 ## Objetivo
+Continuamos con el desarrollo de una herramienta flexible que permite a los desarrolladores mapear objetos Java a diferentes tipos de bases de datos, ahora incluyendo soporte para bases de datos NoSQL.
 
-El objetivo es desarrollar una herramienta que permita mapear objetos Java a tablas de bases de datos relacionales y a documentos en bases de datos NoSQL, facilitando así el desarrollo de aplicaciones Java.
+## Nuevas Funcionalidades
 
-## Funcionalidades Actuales
-
-### Conexión a Oracle
-Utilizamos JDBC para establecer la conexión con una base de datos Oracle.
-
-### Mapeo de Objetos
-Definimos la clase `Persona` con anotaciones personalizadas para mapear sus atributos a columnas de la tabla `Persona` en la base de datos.
-
-### Operaciones CRUD
-Implementamos `PersonaDAO` para manejar las operaciones CRUD (Crear, Leer, Actualizar, Eliminar) sobre la tabla `Persona`.
-
-### Generación de Consultas SQL
-`PersonaDAO` genera dinámicamente consultas SQL basadas en las anotaciones de la clase `Persona`.
-
-### Pruebas Unitarias
-Incluimos pruebas unitarias para validar la funcionalidad de `PersonaDAO`.
+- **Conexión a MongoDB**  
+  Hemos integrado la capacidad de conectar con una base de datos MongoDB. La conexión se configura a través de variables de entorno para mayor flexibilidad.
+  
+- **Mapeo de Objetos a Documentos**  
+  Ahora podemos mapear objetos Java a documentos MongoDB, lo que permite trabajar con datos estructurados en formato JSON.
+  
+- **Operaciones CRUD para MongoDB**  
+  Implementamos la clase `MongoDBDAO` para manejar las operaciones CRUD (Crear, Leer, Actualizar, Eliminar) sobre colecciones de documentos MongoDB.
+  
+- **Pruebas Unitarias para MongoDB**  
+  Se agregaron pruebas unitarias para validar la funcionalidad de `MongoDBDAO`, incluyendo escenarios de creación, lectura, actualización y eliminación de documentos.
 
 ## Estructura del Proyecto
 
-- **com.miproyecto.ConexionBD.java**: Clase que gestiona la conexión a la base de datos Oracle.
-- **com.miproyecto.Persona.java**: Clase que representa un objeto `Persona` con atributos mapeados a columnas de la tabla.
-- **com.miproyecto.PersonaDAO.java**: Clase que implementa las operaciones CRUD para la entidad `Persona`.
-- **com.miproyecto.PersonaDAOTest.java**: Clase con pruebas unitarias para validar el `PersonaDAO`.
+- `com.miproyecto.ConexionBD.java`: Clase que gestiona la conexión a la base de datos Oracle (del avance 1).
+- `com.miproyecto.Persona.java`: Clase que representa un objeto Persona con atributos mapeados a columnas de la tabla o a campos de documentos.
+- `com.miproyecto.PersonaDAO.java`: Clase que implementa las operaciones CRUD para la entidad Persona en Oracle (del avance 1).
+- `com.miproyecto.PersonaDAOTest.java`: Clase con pruebas unitarias para validar el `PersonaDAO` (del avance 1).
+- `com.miproyecto.MongoDBDAO.java`: Clase que implementa las operaciones CRUD para la entidad Persona en MongoDB.
+- `com.miproyecto.MongoDBDAOTest.java`: Clase con pruebas unitarias para validar el `MongoDBDAO`.
 
 ## Cómo Funciona
 
-1. **ConexionBD**: Establece una conexión a la base de datos Oracle utilizando JDBC.
-2. **Persona**: Define los atributos de un objeto `Persona` y utiliza anotaciones para mapearlos a columnas de la tabla `Persona`.
-3. **PersonaDAO**: Utiliza las anotaciones de la clase `Persona` para generar dinámicamente las consultas SQL para las operaciones CRUD.
-4. **Pruebas Unitarias**: `PersonaDAOTest` verifica la funcionalidad correcta de `PersonaDAO`.
+1. **Configuración**  
+   Se establecen las variables de entorno para la conexión a MongoDB (`MONGODB_URL`, `MONGODB_DATABASE`).
+   
+2. **Conexión a MongoDB**  
+   Se utiliza el driver de MongoDB para conectar a la base de datos.
+   
+3. **Mapeo a Documentos**  
+   Se define la estructura de los documentos en MongoDB para representar los objetos Persona.
+   
+4. **MongoDBDAO**  
+   Esta clase se encarga de ejecutar las operaciones CRUD (insertar, obtener, actualizar, eliminar) en la colección de documentos "Persona" de MongoDB.
+   
+5. **Pruebas Unitarias**  
+   Las pruebas unitarias para `MongoDBDAO` validan la funcionalidad de la clase con diferentes escenarios.
 
 ## Requisitos
 
 - Java Development Kit (JDK) 8 o superior
-- Driver JDBC de Oracle
+- Driver JDBC de Oracle (del avance 1)
+- Driver de MongoDB (agregar a las dependencias del proyecto)
 
 ## Instalación
 
 1. Descarga el código fuente del proyecto.
-2. Configura el driver JDBC de Oracle en el classpath.
-3. Crea la tabla `Persona` en tu base de datos Oracle.
+2. Configura el driver JDBC de Oracle y el driver de MongoDB en el classpath.
+3. Crea la tabla Persona en tu base de datos Oracle (si no lo has hecho).
+4. Crea la colección "Persona" en tu base de datos MongoDB.
 
 ## Uso
 
-1. Crea un objeto `PersonaDAO`.
-2. Utiliza los métodos de `PersonaDAO` para realizar operaciones CRUD sobre la tabla `Persona`.
+1. Crea un objeto `MongoDBDAO`.
+2. Utiliza los métodos de `MongoDBDAO` para realizar operaciones CRUD sobre la colección "Persona" en MongoDB.
 
 ## Próximos Pasos
 
-- Implementar el mapeo para otras bases de datos relacionales (MySQL, PostgreSQL, etc.).
-- Implementar la funcionalidad ODM para bases de datos NoSQL (MongoDB, Cassandra, etc.).
-- Implementar la gestión de relaciones entre entidades.
+- Implementar el mapeo para otras bases de datos NoSQL (Cassandra, etc.).
+- Implementar la gestión de relaciones entre entidades para ambas bases de datos.
+- Integrar la selección del tipo de base de datos a utilizar (Oracle o MongoDB) a través de una configuración.
 
 ## Notas
 
-- Este es un primer avance, por lo que hay margen para mejorar la funcionalidad y la arquitectura del proyecto.
-- Se puede utilizar una biblioteca de ORM existente, como Hibernate o JPA, para simplificar el proceso de mapeo y generación de consultas SQL.
-
-¡Gracias por tu interés en nuestro proyecto! Si tienes alguna sugerencia o encuentras algún problema, no dudes en crear un issue o un pull request.
+Se puede utilizar una biblioteca de ODM existente, como Morphia o Spring Data MongoDB, para simplificar el proceso de mapeo y generación de consultas.
 
 ---
 
+¡Gracias por tu interés en nuestro proyecto! Si tienes alguna sugerencia o encuentras algún problema, no dudes en crear un issue o un pull request.
+
 Con ❤️.
+
+---
