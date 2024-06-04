@@ -4,6 +4,7 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import io.github.cdimascio.dotenv.Dotenv;
 import org.bson.Document;
 
 import java.util.ArrayList;
@@ -17,10 +18,14 @@ public class MongoDBDAO {
 
     public MongoDBDAO() {
 
-        mongoClient = MongoClients.create( "mongodb://localhost:27017");
-        database  = mongoClient.getDatabase("PruebaP2");
-        collection = database.getCollection("Persona");
+        Dotenv dotenv = Dotenv.load();
+        String mongoDBURL = dotenv.get("MONGODB_URL");
+        String mongoDBDatabase = dotenv.get("MONGODB_DATABASE");
+        String mongoDBCollection = dotenv.get("MONGODB_COLLECTION");
 
+        mongoClient = MongoClients.create(mongoDBURL);
+        database = mongoClient.getDatabase(mongoDBDatabase);
+        collection = database.getCollection("Persona");
     }
 
     public void insertarPersona(Persona persona) {
